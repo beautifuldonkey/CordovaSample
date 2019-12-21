@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-tab2',
@@ -8,8 +9,9 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 })
 export class Tab2Page {
 
-  constructor(private localNotifications: LocalNotifications) {
+  storedValue: any;
 
+  constructor(private localNotifications: LocalNotifications, private storage: Storage) {
 
     this.localNotifications.schedule([{
       id: 2,
@@ -24,6 +26,10 @@ export class Tab2Page {
       trigger: {at: new Date(new Date().getTime() + 3600)},
       led: 'FF0000',
       sound: null
+    });
+
+    this.storage.get('something').then((data) => {
+      this.storedValue = data;
     });
 
   }
